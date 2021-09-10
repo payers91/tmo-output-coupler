@@ -1,0 +1,12 @@
+set_trim(channel, time, speed) {
+    out "trim \$1 \$2 \$3";
+}
+
+set_switch(channel, value) {
+    out "switch \$1 \$2";
+}
+
+get_status(channel) {
+    out "status \%1";
+    in "%8d"
+}
