@@ -6,19 +6,12 @@
 #  DEV
 #  	ASYN port
 
-record(stringin, "$(P):NAME")
-{
-    field(DESC, "Chiller name")
-    field(SCAN, "Passive")
-}
-
-
 #Trim command to move the potentiometers
 record(bo, "$(P):TRIM")
 {
     field(DESC, "Adjusts desired trimpot")
     field(DTYP, "stream")
-    field(INP,  "@devtmo_coupler.proto set_trim(channel, time, speed) $(DEV)")
+    field(INP,  "@devtmo_coupler.proto set_trim($(P):channelTrim, $(P):timeTrim, $(P):speedTrim) $(DEV)")
     field(SCAN, "Passive")
 }
 
@@ -26,6 +19,22 @@ record(bo, "$(P):SWITCH")
 {
     field(DESC, "Opens/Closes output switch")
     field(DTYP, "stream")
-    field(INP, "@devtmo_coupler.proto set_switch(channel, value) $(DEV)")
+    field(INP, "@devtmo_coupler.proto set_switch($(P):channelSwitch, $(P):valueSwitch) $(DEV)")
     field(SCAN, "Passive")
+}
+
+record(bo, "$(P):STATUS"}
+{
+    field(DESC, "Return status bit for desired channel")
+    field(DTYP, "stream")
+    field(INP, "@devtmo_coupler.proto get_status($(P):channelStatus) $(DEV)")
+    field(SCAN, "Passive")
+}
+
+record(bo, "$(P):VERSION"}
+{
+    field(DESC, "Returns coupler software version/date")
+    field(DTYP, "stream")
+    field(INP, "@devtmo_coupler.proto get_version() $(DEV)")
+    field(SCAN, "Passive"
 }

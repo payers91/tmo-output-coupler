@@ -1,0 +1,50 @@
+
+
+
+record(ai, "$(P):channelTrim"){
+
+    field(DESC, "Desired channel to set knob trim")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "3")
+}
+
+record(ai, "$(P):timeTrim"){
+
+    field(DESC, "Desired duration to turn knob")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "5590")
+}
+
+record(ai, "$(P):speedTrim"){
+
+    field(DESC, "Desired speed to turn knob")
+    field(SCAN, "Passive")
+    field(LOPR, "-63")
+    field(HOPR, "63")
+}
+
+record(ai, "$(P):channelSwitch"){
+
+    field(DESC, "Desired channel to switch output")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "3")
+}
+
+record(bi, "$(P):valueSwitch"){
+
+    field(DESC, "Sets position of coupler switch")
+    field(SCAN, "Passive")
+    field(ZNAM, "Output Off")
+    field(ONAM, "Output On")
+}
+
+record(ai, "$(P):channelStatus"){
+
+    field(DESC, "Desired channel to readback status")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "3")
+}
