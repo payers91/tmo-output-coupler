@@ -1,0 +1,17 @@
+set_trim(channel, time, speed) {
+    out "trim \$channel \$time \$speed";
+}
+
+set_switch(channel, value) {
+    out "switch \$channel \$value";
+}
+
+get_status(channel) {
+    out "status \%channel";
+    in "%8d";
+}
+
+get_version() {
+    out "version";
+    in "%s";
+}
