@@ -3,20 +3,23 @@
 #- You may have to change ioc-tmo-output-coupler to something else
 #- everywhere it appears in this file
 
+epicsEnvSet( "IOCNAME", "$$IOCNAME" )
+epicsEnvSet( "ENGINEER", "$$ENGINEER" )
+
+epicsEnvSet( "STREAM_PROTOCOL_PATH" "$(IOCTOP)/tmo_couplerSup" )
 < envPaths
-epicsEnvSet "STREAM_PROTOCOL_PATH" "$(TOP)/db
+epicsEnvSet("TOP", "$$TOP" )
+cd("$(IOCTOP)")
 
-epicsEnvSet "P" "$(P=ioc-tmo-output-coupler)
-
-
-cd "${TOP}"
+# Run common startup commands for linux soft IOC's
+< /reg/d/iocCommon/All/pre_linux.cmd
 
 ## Register all support components
 dbLoadDatabase "dbd/ioc-tmo-output-coupler.dbd"
 ioc_tmo_output_coupler_registerRecordDeviceDriver pdbbase
 
 ## Set up ASYN ports
-drvAsynSerialPortConfigure("xx","tty",0,0,0)
+drvAsynSerialPort
 asynSetOption("xx", -1, "baud", "9600")
 asynSetOption("xx", -1, "bits", "8")
 asynSetOption("xx", -1, "parity", "none")
