@@ -1,17 +1,22 @@
-set_trim(channel, time, speed) {
-    out "trim \$channel \$time \$speed";
-}
+Terminator = LF;
 
-set_switch(channel, value) {
-    out "switch \$channel \$value";
-}
-
-get_status(channel) {
-    out "status \%channel";
-    in "%8d";
-}
-
-get_version() {
-    out "version";
+set_trim {
+    out "trim \$1 \$2 \$3";
     in "%s";
+}
+
+set_switch {
+    out "switch \$1 \$2";
+    in "%s";
+}
+
+get_status {
+    out "status \%1";
+    in "Status Channel %*i = %X";
+}
+
+get_version {
+    out "version";
+    in "A=%s";
+    in "B=%(\$1)s";
 }

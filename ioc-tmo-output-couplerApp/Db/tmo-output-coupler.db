@@ -125,7 +125,7 @@ record(bo, "$(P):SWITCH")
     field(SCAN, "Passive")
 }
 
-record(bo, "$(P):STATUS"}
+record(bo, "$(P):STATUS")
 {
     field(DESC, "Return status bit for desired channel")
     field(DTYP, "stream")
@@ -133,10 +133,15 @@ record(bo, "$(P):STATUS"}
     field(SCAN, "Passive")
 }
 
-record(bo, "$(P):VERSION"}
+record(ai, "$(P):VERSION_NUM")
 {
-    field(DESC, "Returns coupler software version/date")
+    field(DESC, "Returns coupler software version number")
     field(DTYP, "stream")
-    field(INP, "@devtmo_coupler.proto get_version() $(DEV)")
+    field(INP, "@devtmo_coupler.proto get_version($(P):VERSION_DATE) $(DEV)")
     field(SCAN, "Passive"
+}
+
+record(ai, "$(P):VERSION_DATE")
+{
+    field(DESC, "Returns coupler software version date")
 }
