@@ -1,0 +1,22 @@
+Terminator = LF;
+
+set_trim {
+    out "trim \$1 \$2 \$3";
+    in "%s";
+}
+
+set_switch {
+    out "switch \$1 \$2";
+    in "%s";
+}
+
+get_status {
+    out "status \%1";
+    in "Status Channel %*i = %X";
+}
+
+get_version {
+    out "version";
+    in "%s";
+    in "%(\$1)s";
+}

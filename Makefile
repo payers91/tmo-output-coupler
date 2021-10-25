@@ -1,14 +1,16 @@
-# Makefile for Asyn tmo_coupler support
-#
-# Created by payers on Tue Sep  7 14:41:15 2021
-# Based on the Asyn streamSCPI template
-
+# Makefile at top of application tree
 TOP = .
+-include $(TOP)/IOC_APPL_TOP
+ifneq (,$(IOC_APPL_TOP))
+TOP = $(IOC_APPL_TOP)
+endif
+
 include $(TOP)/configure/CONFIG
-
-DIRS := configure
-DIRS += $(wildcard *[Ss]up)
-DIRS += $(wildcard *[Aa]pp)
-DIRS += $(wildcard ioc[Bb]oot)
-
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard configure))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *Lib))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *App))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *app))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard iocBoot))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard iocboot))
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard children))
 include $(TOP)/configure/RULES_TOP

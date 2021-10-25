@@ -1,0 +1,147 @@
+#
+# Simple protocol file for basic serial commands with the TMO output coupler
+#
+#  BASE
+#  	EPICS prefix
+#  PORT
+#  	ASYN port
+
+#Trim command to move the potentiometers
+record(ai, "$(BASE):channelTrim"){
+
+    field(DESC, "Desired channel to set knob trim")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "3")
+}
+
+record(ai, "$(BASE):timeTrim"){
+
+    field(DESC, "Desired duration to turn knob")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "5590")
+}
+
+record(ai, "$(BASE):speedTrim"){
+
+    field(DESC, "Desired speed to turn knob")
+    field(SCAN, "Passive")
+    field(LOPR, "-63")
+    field(HOPR, "63")
+}
+
+record(ai, "$(BASE):channelSwitch"){
+
+    field(DESC, "Desired channel to switch output")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "3")
+}
+
+record(bi, "$(BASE):valueSwitch"){
+
+    field(DESC, "Sets position of coupler switch")
+    field(SCAN, "Passive")
+    field(ZNAM, "Output Off")
+    field(ONAM, "Output On")
+}
+
+record(ai, "$(BASE):channelStatus"){
+
+    field(DESC, "Desired channel to readback status")
+    field(SCAN, "Passive")
+    field(LOPR, "0")
+    field(HOPR, "3")
+}
+
+record(calc, "$(BASE):status_FAULT"){
+
+    field(DESC, "Flag for general fault status bit")
+    field(SCAN, "Passive")
+    field(INPA, "$(BASE):STATUS.VAL")
+    field(INPB, "1")
+    field(CALC, "A&B=B?1:0")
+}
+
+record(calc, "$(BASE):status_OCP"){
+
+    field(DESC, "Flag for overcurrent fault status bit")
+    field(SCAN, "Passive")
+    field(INPA, "$(BASE):STATUS.VAL")
+    field(INPB, "2")
+    field(CALC, "A&B=B?1:0")
+}
+
+record(calc, "$(BASE):status_UVLO"){
+
+    field(DESC, "Flag for undervoltage fault status bit")
+    field(SCAN, "Passive")
+    field(INPA, "$(BASE):STATUS.VAL")
+    field(INPB, "4")
+    field(CALC, "A&B=B?1:0")
+}
+
+record(calc, "$(BASE):status_OTS"){
+
+    field(DESC, "Flag for overtemp fault status bit")
+    field(SCAN, "Passive")
+    field(INPA, "$(BASE):STATUS.VAL")
+    field(INPB, "8")
+    field(CALC, "A&B=B?1:0")
+}
+
+record(calc, "$(BASE):status_ILIMIT"){
+
+    field(DESC, "Flag for current limit hold fault status bit")
+    field(SCAN, "Passive")
+    field(INPA, "$(BASE):STATUS.VAL")
+    field(INPB, "16")
+    field(CALC, "A&B=B?1:0")
+}
+
+record(calc, "$(BASE):status_CLEAR"){
+
+    field(DESC, "Flag for clear fault status bit")
+    field(SCAN, "Passive")
+    field(INPA, "$(BASE):STATUS.VAL")
+    field(INPB, "128")
+    field(CALC, "A&B=B?1:0")
+}
+
+record(bo, "$(BASE):TRIM")
+{
+    field(DESC, "Adjusts desired trimpot")
+    field(DTYP, "stream")
+    field(INP,  "@devtmo_coupler.proto set_trim($(BASE):channelTrim, $(BASE):timeTrim, $(BASE):speedTrim) $(PORT)")
+    field(SCAN, "Passive")
+}
+
+record(bo, "$(BASE):SWITCH")
+{
+    field(DESC, "Opens/Closes output switch")
+    field(DTYP, "stream")
+    field(INP, "@devtmo_coupler.proto set_switch($(BASE):channelSwitch, $(BASE):valueSwitch) $(PORT)")
+    field(SCAN, "Passive")
+}
+
+record(ai, "$(BASE):STATUS")
+{
+    field(DESC, "Return status bit for desired channel")
+    field(DTYP, "stream")
+    field(INP, "@devtmo_coupler.proto get_status($(BASE):channelStatus) $(PORT)")
+    field(SCAN, "Passive")
+}
+
+record(ai, "$(BASE):VERSION_NUM")
+{
+    field(DESC, "Returns coupler software version number")
+    field(DTYP, "stream")
+    field(INP, "@devtmo_coupler.proto get_version($(BASE):VERSION_DATE) $(PORT)")
+    field(SCAN, "Passive"
+}
+
+record(ai, "$(BASE):VERSION_DATE")
+{
+    field(DESC, "Returns coupler software version date")
+}
